@@ -1,0 +1,19 @@
+name: zsp
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pip
+  - matplotlib
+  - cudatoolkit=10.2
+  - pytorch=1.9.1
+  - torchvision
+  - opencv
+  - scikit-learn
+  - scikit-image
+  - fvcore
+  - iopath::iopath
+  - bottler::nvidiacub
+  - pip:
+    - ipyplot
