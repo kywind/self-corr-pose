@@ -184,6 +184,12 @@ class Trainer:
                     add_image(self.log, 'vis/depth_gt', depth[0,:,:,None].repeat(1,1,3).detach().cpu().numpy(), vis_id, scale=True)
                     add_image(self.log, 'vis/depth_diff_render', aux_output['depth_diff_render_vis'].permute(1,2,0).detach().cpu().numpy(), vis_id, scale=True)
 
+                add_image(self.log, 'vis/match', aux_output['match_vis'], vis_id, scale=True)
+                add_image(self.log, 'vis/match_gt', aux_output['match_gt_vis'], vis_id, scale=True)
+                add_image(self.log, 'vis/texture_render', aux_output['texture_render_vis'].permute(1,2,0).detach().cpu().numpy(), vis_id, scale=False)
+                add_image(self.log, 'vis/imatch', aux_output['imatch_vis'], vis_id, scale=True)
+                add_image(self.log, 'vis/imatch_gt', aux_output['imatch_gt_vis'], vis_id, scale=True)
+                    
                 add_image(self.log, 'vis/cycle_match', aux_output['cycle_match_vis'], vis_id, scale=True)
                 add_image(self.log, 'vis/cycle_match_gt', aux_output['cycle_match_gt_vis'], vis_id, scale=True)
                 add_image(self.log, 'vis/pt_src', aux_output['pt_src_vis'], vis_id, scale=True)

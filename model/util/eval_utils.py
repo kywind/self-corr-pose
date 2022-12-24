@@ -165,53 +165,6 @@ def get_best_iou(symmetry_idx, box_pred, rot_gt, trans_gt, scale_gt):
                 best_val = iou_rel + (ae_rel + pe_rel)*angle_ratio
                 best_rot_gt = rot_gt_temp.copy()
     
-    elif symmetry_idx == 1:
-        # raise ValueError('need to set symmetry idx to -1.')
-
-        box_gt = box.Box.from_transformation(rot_gt, trans_gt, scale_gt)
-        # print(torch.tensor(box_gt.vertices))
-        # print(torch.tensor(box_pred.vertices))
-        # raise
-        iou_pred = iou.IoU(box_pred, box_gt)
-        try:
-            iou_rel = iou_pred.iou()
-        except:
-            iou_rel = 0
-        ae, pe = evaluate_viewpoint(box_pred.vertices, box_gt.vertices)
-        ae_rel = -min(1, ae / 90)
-        pe_rel = -min(1, pe / 90)
-        # ae = pe = ae_rel = pe_rel = 0
-
-        rot = np.array([[-1, 0, 0],
-                        [0, 1, 0],
-                        [0, 0, -1]])
-        rot_gt_flip = rot @ rot_gt
-
-        box_gt_flip = box.Box.from_transformation(rot_gt_flip, trans_gt, scale_gt)
-        iou_pred_flip = iou.IoU(box_pred, box_gt_flip)
-        try:
-            iou_flip_rel = iou_pred_flip.iou()
-        except:
-            iou_flip_rel = 0
-        ae_flip, pe_flip = evaluate_viewpoint(box_pred.vertices, box_gt_flip.vertices)
-        ae_flip_rel = -min(1, ae_flip / 90)
-        pe_flip_rel = -min(1, pe_flip / 90)
-        # ae_flip = pe_flip = ae_flip_rel = pe_flip_rel = 0
-
-        # print(iou_rel, ae_rel, pe_rel)
-        # print(iou_flip_rel, ae_flip_rel, pe_flip_rel)
-
-        if iou_flip_rel + (ae_flip_rel + pe_flip_rel)*angle_ratio > iou_rel + (ae_rel + pe_rel)*angle_ratio:
-            best_iou = iou_flip_rel
-            best_ae = ae_flip
-            best_pe = pe_flip
-            best_rot_gt = rot_gt_flip
-        else:
-            best_iou = iou_rel
-            best_ae = ae
-            best_pe = pe
-            best_rot_gt = rot_gt
-    
     else:
         best_rot_gt = rot_gt.copy()
         box_gt = box.Box.from_transformation(best_rot_gt, trans_gt, scale_gt)
@@ -235,21 +188,6 @@ def get_best_deg_cm(symmetry_idx, box_pred, rot_gt, trans_gt, scale_gt):
         y_axis_pred = box_pred.vertices[3] - box_pred.vertices[1]
         angle = np.arccos(y_axis_pred.dot(y_axis_gt) / (np.linalg.norm(y_axis_pred) * np.linalg.norm(y_axis_gt)))
     
-    elif symmetry_idx == 1:
-        # raise ValueError('need to set symmetry idx to -1.')
-        
-        try:
-            rot_pred = box_pred.rotation
-            R = rot_pred @ rot_gt.transpose()
-            rot = np.array([[-1, 0, 0],
-                            [0, 1, 0],
-                            [0, 0, -1]])
-            rot_gt_flip = rot @ rot_gt
-            R_flip = rot_pred @ rot_gt_flip.transpose()
-            angle = min(np.arccos((np.trace(R) - 1) / 2), np.arccos((np.trace(R_flip) - 1) / 2))
-        except:
-            angle = np.pi
-      
     else:
         rot_pred = box_pred.rotation
         R = rot_pred @ rot_gt.transpose()

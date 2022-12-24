@@ -323,12 +323,6 @@ class MeshNet(nn.Module):
                 states.pop(name)
                 continue
 
-        for dest, p in self.named_parameters():
-            for name in states.keys():
-                if dest == name: 
-                    break
-            print('{:<60}'.format(dest))
-
         self.load_state_dict(states, strict=False)
         print('network load complete')
     

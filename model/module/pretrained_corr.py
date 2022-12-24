@@ -77,8 +77,8 @@ class PretrainedCorrespondence(nn.Module):
         tgt_feat = tgt_feat.reshape(*tgt_feat.shape[:2], -1)
         hw = src_feat.shape[-1]
 
-        src_mask_down = (F.interpolate(src_mask, (self.feat_size, self.feat_size), mode='bilinear') > 0.5).reshape(bsz, -1) * 1.0  # b,h*w
-        tgt_mask_down = (F.interpolate(tgt_mask, (self.feat_size, self.feat_size), mode='bilinear') > 0.5).reshape(bsz, -1) * 1.0  # b,h*w
+        src_mask_down = F.interpolate(src_mask, (self.feat_size, self.feat_size), mode='nearest').reshape(bsz, -1) * 1.0  # b,h*w
+        tgt_mask_down = F.interpolate(tgt_mask, (self.feat_size, self.feat_size), mode='nearest').reshape(bsz, -1) * 1.0  # b,h*w
         
         mask_down = src_mask_down[:,:,None] * tgt_mask_down[:,None,:]
 

@@ -37,7 +37,7 @@ class Correspondence:
         bsz, h, w = mask.shape
         opts = self.opts
 
-        mask_down = (F.interpolate(mask[:, None], (self.hf, self.wf), mode='bilinear') * 0.5).reshape(bsz, -1) * 1.0  # b,h*w
+        mask_down = F.interpolate(mask[:, None], (self.hf, self.wf), mode='nearest').reshape(bsz, -1) * 1.0  # b,h*w
 
         pointcorr = mesh_feat.bmm(img_feat)  # b,n,h*w
         pointcorr = pointcorr.permute(0,2,1)  # b,h*w,n
@@ -92,15 +92,15 @@ class Correspondence:
         tgt_img_feat = tgt_img_feat.reshape(bsz, self.opts.n_corr_feat, -1)  # b,c,h*w
         tgt_img_feat = F.normalize(tgt_img_feat, 2, 1)  # b,c,h*w
 
-        src_mask_down = (F.interpolate(src_mask, (self.hf//2, self.wf//2), mode='bilinear') > 0.5).reshape(bsz, -1) * 1.0  # b,h*w
-        tgt_mask_down = (F.interpolate(tgt_mask, (self.hf//2, self.wf//2), mode='bilinear') > 0.5).reshape(bsz, -1) * 1.0  # b,h*w
+        src_mask_down = F.interpolate(src_mask, (self.hf//2, self.wf//2), mode='nearest').reshape(bsz, -1) * 1.0  # b,h*w
+        tgt_mask_down = F.interpolate(tgt_mask, (self.hf//2, self.wf//2), mode='nearest').reshape(bsz, -1) * 1.0  # b,h*w
 
         mask_down = src_mask_down[:,:,None] * tgt_mask_down[:,None,:]
 
         tgt_img_feat = tgt_img_feat.reshape(*tgt_img_feat.shape[:2], self.hf, self.wf)  # b,c,h,w
         src_img_feat = src_img_feat.reshape(*src_img_feat.shape[:2], self.hf, self.wf)  # b,c,h,w
-        tgt_img_feat = F.interpolate(tgt_img_feat, (self.hf//2, self.wf//2), mode='bilinear').reshape(*tgt_img_feat.shape[:2], -1) * 1.0  # b,h*w
-        src_img_feat = F.interpolate(src_img_feat, (self.hf//2, self.wf//2), mode='bilinear').reshape(*src_img_feat.shape[:2], -1) * 1.0  # b,h*w
+        tgt_img_feat = F.interpolate(tgt_img_feat, (self.hf//2, self.wf//2), mode='nearest').reshape(*tgt_img_feat.shape[:2], -1) * 1.0  # b,h*w
+        src_img_feat = F.interpolate(src_img_feat, (self.hf//2, self.wf//2), mode='nearest').reshape(*src_img_feat.shape[:2], -1) * 1.0  # b,h*w
 
         pointcorr = src_img_feat.permute(0,2,1).bmm(tgt_img_feat)  # b,h*w,h*w(tgt)
         pointcorr = pointcorr * (mask_down > 0) - 1e5 * (mask_down == 0)  # b,h*w,h*w
@@ -123,14 +123,14 @@ class Correspondence:
         
         src_mask = src_mask[:, None]
         tgt_mask = tgt_mask[:, None]
-        src_mask_down = (F.interpolate(src_mask, (self.hf//2, self.wf//2), mode='bilinear') > 0.5).reshape(bsz, -1) * 1.0  # b,h*w
-        tgt_mask_down = (F.interpolate(tgt_mask, (self.hf//2, self.wf//2), mode='bilinear') > 0.5).reshape(bsz, -1) * 1.0  # b,h*w
+        src_mask_down = F.interpolate(src_mask, (self.hf//2, self.wf//2), mode='nearest').reshape(bsz, -1) * 1.0  # b,h*w
+        tgt_mask_down = F.interpolate(tgt_mask, (self.hf//2, self.wf//2), mode='nearest').reshape(bsz, -1) * 1.0  # b,h*w
         mask_down = src_mask_down[:,:,None] * tgt_mask_down[:,None,:]
 
         tgt_img_feat = tgt_img_feat.reshape(*tgt_img_feat.shape[:2], self.hf, self.wf)  # b,c,h,w
         src_img_feat = src_img_feat.reshape(*src_img_feat.shape[:2], self.hf, self.wf)  # b,c,h,w
-        tgt_img_feat = F.interpolate(tgt_img_feat, (self.hf//2, self.wf//2), mode='bilinear').reshape(*tgt_img_feat.shape[:2], -1) * 1.0  # b,c,h*w
-        src_img_feat = F.interpolate(src_img_feat, (self.hf//2, self.wf//2), mode='bilinear').reshape(*src_img_feat.shape[:2], -1) * 1.0  # b,c,h*w
+        tgt_img_feat = F.interpolate(tgt_img_feat, (self.hf//2, self.wf//2), mode='nearest').reshape(*tgt_img_feat.shape[:2], -1) * 1.0  # b,c,h*w
+        src_img_feat = F.interpolate(src_img_feat, (self.hf//2, self.wf//2), mode='nearest').reshape(*src_img_feat.shape[:2], -1) * 1.0  # b,c,h*w
         
         pointcorr = src_img_feat.permute(0,2,1).bmm(tgt_img_feat)  # b,h*w,h*w(tgt)
         pointcorr = pointcorr * (mask_down > 0) - 1e5 * (mask_down == 0)  # b,h*w,h*w

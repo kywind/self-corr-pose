@@ -28,7 +28,7 @@
 --camera_wt=0.005
 --match_wt=0.02
 --imatch_wt=0.02
---decay_ratio=0.5
+--decay_ratio=0.1
 --tau_mesh=10
 --tau_img=10
 --use_depth=True
