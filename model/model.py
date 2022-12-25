@@ -126,7 +126,8 @@ class MeshNet(nn.Module):
             rotation_2 = torch.cat((rotation_2[:, 1:], rotation_2[:, :1]), dim=1).reshape(bsz, 3, 3)
             cam_loss = self.weights.camera_wt * compute_camera_loss(rotation, rotation_2).mean()
     
-        total_loss = mask_loss + symmetry_loss + triangle_loss + deform_loss + pullfar_loss + cycle_loss_pt + cycle_loss
+        total_loss = mask_loss + symmetry_loss + triangle_loss + deform_loss + pullfar_loss + \
+            texture_loss + match_loss + imatch_loss + cycle_loss_pt + cycle_loss
         if opts.use_depth:
             total_loss += depth_loss
         if opts.camera_loss:
