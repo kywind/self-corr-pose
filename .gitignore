@@ -1,13 +1,12 @@
+# project related
 log/
-scripts/
-unused/
 kubernetes/
 docker/
 temp/
 wandb/
 pretrain/
-demo/
 
+# Extensions
 *.zip
 *.DS_Store
 .ipynb_checkpoints
@@ -32,6 +31,7 @@ ipyNb
 del/
 .DS_Store
 .vscode/
+.tensorboard-info
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

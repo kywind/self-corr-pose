@@ -38,7 +38,7 @@
 --cycle_loss_wt=0.02
 --cycle_loss_pretrain_wt=0.005
 --vert_lr_ratio=0.1
---rotation_offset=0.1,0.0,0.0,0.0,0.1,0.1
+--rotation_offset=0.2,0.0,0.0,0.0,-0.2,0.2
 --base_rot=1,0,0,0,-1,0,0,0,1
 --divide_fn=both
 --pretrain_k=200
