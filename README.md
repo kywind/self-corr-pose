@@ -5,11 +5,16 @@
 This repository is the official implementation for the paper:
 
 > Self-Supervised Geometric Correspondence for Category-Level 6D Object Pose Estimation in the Wild  
-> Kaifeng Zhang, Yang Fu, Shubhankar Borse, Hong Cai, Fatih Porikli, Xiaolong Wang  
-> arXiv, 2022  
+> [Kaifeng Zhang](https://kywind.github.io/), [Yang Fu](https://oasisyang.github.io/), [Shubhankar Borse](https://scholar.google.com/citations?user=ZsgWCyMAAAAJ&hl=en), [Hong Cai](https://scholar.google.com/citations?user=9y3Kd3cAAAAJ&hl=en), [Fatih Porikli](https://scholar.google.com/citations?user=VpB8NZ8AAAAJ&hl=en]), [Xiaolong Wang](https://xiaolonw.github.io)  
+> ICLR, 2023  
 > [Project Page](https://kywind.github.io/self-pose) / [ArXiv](https://arxiv.org/abs/2210.07199)  
 
-This page is still under construction. Thank you for your early attention to our work!
+## Progress
+
+- [x] Training code
+- [x] Evaluation code
+- [ ] Pretrained models
+- [ ] More datasets
 
 ## Environment Setup
 
@@ -52,9 +57,6 @@ Run testing with ```predict.py```. We have provided an example testing script, r
 bash scripts/predict.sh
 ```
 The testing script also offers visualization options. For example, use ```--vis_pred --vis_bbox``` for bounding box visualization.
-
-## Pretrained Model
-To be added.
 
 ## Citation
 
