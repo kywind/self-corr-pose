@@ -55,6 +55,7 @@ class Tester:
         self.opts = opts
         # torch.autograd.set_detect_anomaly(True)
         self.save_dir = os.path.join(opts.checkpoint_dir, opts.name)
+        os.makedirs(self.save_dir, exist_ok=True)
 
         if opts.local_rank <= 0:
             log_file = os.path.join(self.save_dir, 'config-test.txt')
