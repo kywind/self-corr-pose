@@ -58,6 +58,12 @@ bash scripts/predict.sh
 ```
 The testing script also offers visualization options. For example, use ```--vis_pred --vis_bbox``` for bounding box visualization.
 
+## Pretrained Models
+
+We provide the pretrained models on Wild6D dataset containing all 5 categories. 
+
+To use, download the checkpoints in this [link](https://drive.google.com/drive/folders/1m9JwibSun0GTHRcfHoVLBLmPc3DWqy0Q?usp=share_link). Indicate the checkpoint path with the ```--model_path``` argument in ```scripts/predict.sh```. 
+
 ## Citation
 
 ```bibtex
@@ -68,12 +74,6 @@ The testing script also offers visualization options. For example, use ```--vis_
   year={2022}
 }
 ```
-
-## Pretrained Models
-
-We provide the pretrained models on Wild6D dataset containing all 5 categories. 
-
-To use, download the checkpoints in this [link](https://drive.google.com/drive/folders/1m9JwibSun0GTHRcfHoVLBLmPc3DWqy0Q?usp=share_link). Indicate the checkpoint path with the ```--model_path``` argument in ```scripts/predict.sh```. 
 
 ## Acknowledgement
 
